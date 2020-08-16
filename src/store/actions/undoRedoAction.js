@@ -9,9 +9,3 @@ export const redo = () => dispatch => {
         type: 'REDO',
     });
 }
-
-export const reset = () => dispatch => {
-    dispatch({
-        type: 'RESET',
-    });
-}

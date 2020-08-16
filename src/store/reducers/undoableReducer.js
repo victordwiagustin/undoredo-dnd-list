@@ -29,8 +29,6 @@ function undoable(reducer) {
                     present: next,
                     future: newFuture,
                 };
-            case 'RESET':
-                return initialState;
             default:
                 // Delegate handling the action to the passed reducer
                 const newPresent = reducer(present, action);

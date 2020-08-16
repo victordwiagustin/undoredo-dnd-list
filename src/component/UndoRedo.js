@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as UndoRedoAction from "../store/actions/undoRedoAction";
 
@@ -13,21 +13,7 @@ const buttonStyle = {
     margin: 5,
 };
 
-// fake data generator
-const getItems = (count) =>
-    Array.from({ length: count }, (v, k) => k).map((k) => ({
-        id: `item-${k+1}`,
-        content: `todo ${k+1}`,
-        origin: k
-    }));
-
 const UndoRedo = (props) => {
-    useEffect(() => {
-        console.log(props.todos.present, getItems(6))
-        if (JSON.stringify(props.todos.present) === JSON.stringify(getItems(6))) {
-            props.onReset()
-        }
-    }, [props.todos]);
     return (
         <div style={containerStyle}>
             <button
@@ -44,13 +30,6 @@ const UndoRedo = (props) => {
             >
                 Redo
             </button>
-            <button 
-                onClick={props.onReset}
-                style={buttonStyle}
-                disabled={!props.canUndo}
-            >
-                Reset
-            </button>
         </div>
     );
 };
@@ -58,13 +37,11 @@ const UndoRedo = (props) => {
 const mapStateToProps = (state) => ({
     canUndo: state.todos.past.length > 0,
     canRedo: state.todos.future.length > 0,
-    todos: state.todos
 });
 
 const mapDispatchToProps = {
     onUndo: UndoRedoAction.undo,
     onRedo: UndoRedoAction.redo,
-    onReset: UndoRedoAction.reset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UndoRedo);
